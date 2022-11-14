@@ -37,6 +37,7 @@
 
   &.selected {
     background-color: #970c64;
+    cursor: pointer;
     &.focused {
       border-color: #fff;
       border-bottom-width: 3px;
