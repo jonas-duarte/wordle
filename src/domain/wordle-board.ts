@@ -1,6 +1,8 @@
+import { EventEmitter } from 'events';
 import { WordsRepository } from './words-repository';
 
 export class WordleBoard {
+  private boardEvents: EventEmitter = new EventEmitter();
   private rowPointer = 0;
   private words: string[] = [];
   private _validation: string[][] = [];
@@ -85,9 +87,17 @@ export class WordleBoard {
     this.rowPointer++;
     if (this.rowPointer >= this.size) {
       this._isComplete = true;
+      this.boardEvents.emit('board:complete', { status: 'game-over' });
     }
     if (word === this.answer) {
       this._isComplete = true;
+      this.boardEvents.emit('board:complete', { status: 'winner' });
     }
+  }
+
+  public onFinish(
+    callback: (res: { status: 'game-over' | 'winner' }) => void
+  ) {
+    this.boardEvents.on('board:complete', callback);
   }
 }

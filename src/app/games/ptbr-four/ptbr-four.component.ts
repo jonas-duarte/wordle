@@ -29,6 +29,31 @@ export class PtbrFourComponent implements OnInit {
 
   inputManager = new InputManager(wordsRepository, 5);
 
+  private showMessage(text: string) {
+    setTimeout(() => {
+      alert(text);
+    }, 100);
+  }
+
+  private setupBoardEvents() {
+    let completedGames = 0;
+    let gameOver = false;
+    [this.board1, this.board2, this.board3, this.board4].forEach((board) => {
+      board.onFinish(({ status }) => {
+        if (status === 'winner') {
+          completedGames++;
+          if (completedGames === 4) {
+            this.showMessage('You win!');
+          }
+        } else if (status === 'game-over') {
+          if (gameOver) return;
+          gameOver = true;
+          this.showMessage('Game over!');
+        }
+      });
+    });
+  }
+
   constructor() {
     this.inputManager.onConfirm((word: string) => {
       this.board1.addWord(word);
@@ -36,6 +61,8 @@ export class PtbrFourComponent implements OnInit {
       this.board3.addWord(word);
       this.board4.addWord(word);
     });
+
+    this.setupBoardEvents();
   }
 
   ngOnInit(): void {}

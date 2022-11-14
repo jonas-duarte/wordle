@@ -21,10 +21,27 @@ export class PtbrOneComponent implements OnInit {
   );
   inputManager = new InputManager(wordsRepository, 5);
 
+  private showMessage(text: string) {
+    setTimeout(() => {
+      alert(text);
+    }, 100);
+  }
+
+  private setupBoardEvents() {
+    this.board.onFinish(({ status }) => {
+      if (status === 'winner') {
+        this.showMessage('You win!');
+      } else if (status === 'game-over') {
+        this.showMessage('Game over!');
+      }
+    });
+  }
+
   constructor() {
     this.inputManager.onConfirm((word: string) => {
       this.board.addWord(word);
     });
+    this.setupBoardEvents();
   }
 
   ngOnInit(): void {}
