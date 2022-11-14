@@ -28,6 +28,21 @@
 
   border: 1px solid #fff;
   background-color: #444;
+
+  &.correct {
+    background-color: #0c7c59;
+    border-color: #fff5;
+  }
+
+  &.displaced {
+    background-color: #EEB91B;
+    border-color: #fff5;
+  }
+
+  &.incorrect {
+    background-color: #000;
+    border-color: #fff5;
+  }
 }
 
 

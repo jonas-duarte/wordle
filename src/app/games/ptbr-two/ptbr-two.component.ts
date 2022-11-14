@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { InputManager } from 'src/domain/input-manager';
+import {
+  bindBoardsToInputManager,
+  waitForBoardsResult,
+} from 'src/domain/utils';
 import { WordleBoard } from 'src/domain/wordle-board';
 import { WordsRepository } from 'src/domain/words-repository';
 
@@ -35,32 +39,16 @@ export class PtbrTwoComponent implements OnInit {
     }, 100);
   }
 
-  private setupBoardEvents() {
-    let completedGames = 0;
-    let gameOver = false;
-    [this.board1, this.board2].forEach((board) => {
-      board.onFinish(({ status }) => {
-        if (status === 'winner') {
-          completedGames++;
-          if (completedGames === 2) {
-            this.showMessage('You win!');
-          }
-        } else if (status === 'game-over') {
-          if (gameOver) return;
-          gameOver = true;
-          this.showMessage('Game over!');
-        }
-      });
-    });
-  }
-
   constructor() {
-    this.inputManager.onConfirm((word: string) => {
-      this.board1.addWord(word);
-      this.board2.addWord(word);
-    });
+    bindBoardsToInputManager([this.board1, this.board2], this.inputManager);
 
-    this.setupBoardEvents();
+    waitForBoardsResult([this.board1, this.board2]).then((result) => {
+      if (result === 'winner') {
+        this.showMessage('Winner!');
+      } else {
+        this.showMessage('Game Over!');
+      }
+    });
   }
 
   ngOnInit(): void {}

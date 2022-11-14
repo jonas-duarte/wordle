@@ -1,4 +1,4 @@
-import { InputManager } from 'src/domain/input-manager';
+import { InputManager, KeyStatus } from 'src/domain/input-manager';
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 
 @Component({
@@ -20,5 +20,9 @@ export class KeyboardComponent implements OnInit {
 
   handleKeyClick(key: string) {
     this.inputManager.handleKey(key);
+  }
+
+  keyStatus(key: string): KeyStatus | 'undefined' {
+    return this.inputManager.getHigherKeyStatus(key) || 'undefined';
   }
 }

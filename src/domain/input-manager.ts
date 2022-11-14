@@ -1,6 +1,10 @@
 import { EventEmitter } from 'events';
 import { WordsRepository } from './words-repository';
 
+export type KeyStatus = 'correct' | 'incorrect' | 'displaced';
+
+const STATUS_PRIORITY: KeyStatus[] = ['correct', 'displaced', 'incorrect'];
+
 export class InputManager {
   private _word: string[];
   private _pointer = 0;
@@ -64,5 +68,39 @@ export class InputManager {
     this.inputEvents.emit('input:confirm', this._word.join(''));
     this._pointer = 0;
     this._word = new Array(this.wordSize);
+  }
+
+  private _keyStatus = new Map<string, KeyStatus[]>();
+  public setKeyStatus(
+    key: string,
+    status: KeyStatus,
+    position: [number, number]
+  ) {
+    const [slice, total] = position;
+    const _key = key.toUpperCase();
+    const value =
+      this._keyStatus.get(_key) || new Array(total).fill('incorrect');
+    const newStatusPriority = STATUS_PRIORITY.indexOf(status);
+    const currentStatusPriority = STATUS_PRIORITY.indexOf(value[slice]);
+    if (newStatusPriority > currentStatusPriority) return;
+    value[slice] = status;
+    this._keyStatus.set(_key, value);
+  }
+
+  public getHigherKeyStatus(key: string): KeyStatus | null {
+    const value = this._keyStatus.get(key.toUpperCase());
+    if (!value) return null;
+    return value.reduce((acc, curr) => {
+      const accPriority = STATUS_PRIORITY.indexOf(acc);
+      const currPriority = STATUS_PRIORITY.indexOf(curr);
+      return accPriority < currPriority ? acc : curr;
+    });
+  }
+
+  public clearKeyStatus(gameSlot: number) {
+    this._keyStatus.forEach((value, key) => {
+      value[gameSlot] = 'incorrect';
+      this._keyStatus.set(key, value);
+    });
   }
 }

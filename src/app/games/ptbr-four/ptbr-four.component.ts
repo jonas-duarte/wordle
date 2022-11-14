@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { InputManager } from 'src/domain/input-manager';
+import {
+  bindBoardsToInputManager,
+  waitForBoardsResult,
+} from 'src/domain/utils';
 import { WordleBoard } from 'src/domain/wordle-board';
 import { WordsRepository } from 'src/domain/words-repository';
 
@@ -8,12 +12,13 @@ export const wordsRepository = new WordsRepository(
 );
 
 function createBoard() {
-  return new WordleBoard(
-    wordsRepository,
-    9,
-    5,
-    wordsRepository.getRandomWord().toUpperCase()
-  );
+  const randomWord = wordsRepository.getRandomWord().toUpperCase();
+  // const randomWord = 'BOCHA';
+  const board = new WordleBoard(wordsRepository, 9, 5, randomWord);
+  // setTimeout(() => board.addWord('CENAS'), 1000);
+  // setTimeout(() => board.addWord('CHAME'), 2000);
+  // setTimeout(() => board.addWord('BAIAS'), 3000);
+  return board;
 }
 
 @Component({
@@ -35,34 +40,24 @@ export class PtbrFourComponent implements OnInit {
     }, 100);
   }
 
-  private setupBoardEvents() {
-    let completedGames = 0;
-    let gameOver = false;
-    [this.board1, this.board2, this.board3, this.board4].forEach((board) => {
-      board.onFinish(({ status }) => {
-        if (status === 'winner') {
-          completedGames++;
-          if (completedGames === 4) {
-            this.showMessage('You win!');
-          }
-        } else if (status === 'game-over') {
-          if (gameOver) return;
-          gameOver = true;
-          this.showMessage('Game over!');
-        }
-      });
-    });
-  }
-
   constructor() {
-    this.inputManager.onConfirm((word: string) => {
-      this.board1.addWord(word);
-      this.board2.addWord(word);
-      this.board3.addWord(word);
-      this.board4.addWord(word);
-    });
+    bindBoardsToInputManager(
+      [this.board1, this.board2, this.board3, this.board4],
+      this.inputManager
+    );
 
-    this.setupBoardEvents();
+    waitForBoardsResult([
+      this.board1,
+      this.board2,
+      this.board3,
+      this.board4,
+    ]).then((result) => {
+      if (result === 'winner') {
+        this.showMessage('Winner!');
+      } else {
+        this.showMessage('Game Over!');
+      }
+    });
   }
 
   ngOnInit(): void {}

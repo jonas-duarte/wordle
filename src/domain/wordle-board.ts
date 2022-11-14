@@ -1,11 +1,17 @@
 import { EventEmitter } from 'events';
 import { WordsRepository } from './words-repository';
 
+type BoardStatus = 'playing' | 'winner' | 'game-over';
+type OnFinishCallback = (data: { status: BoardStatus }) => void;
+type WordValidationStatus = 'correct' | 'incorrect' | 'displaced';
+type WordValidation = WordValidationStatus[];
+type OnWordAddedCallback = (word: string, validation: WordValidation) => void;
+
 export class WordleBoard {
   private boardEvents: EventEmitter = new EventEmitter();
   private rowPointer = 0;
   private words: string[] = [];
-  private _validation: string[][] = [];
+  private _validation: WordValidation[] = [];
   constructor(
     private readonly wordsRepository: WordsRepository,
     public readonly size: number,
@@ -33,9 +39,11 @@ export class WordleBoard {
     return this._validation;
   }
 
-  private validateWord(word: string): string[] {
+  private validateWord(word: string): WordValidation {
     const answer = this.answer.split('');
-    const statusMap = answer.map(() => 'unknown');
+    const statusMap: (WordValidationStatus | 'unknown')[] = answer.map(
+      () => 'unknown'
+    );
     const _word = word.toUpperCase().split('');
 
     // Check correct letters
@@ -85,6 +93,7 @@ export class WordleBoard {
     this.words.push(word);
     this._validation.push(wordValidation);
     this.rowPointer++;
+    this.boardEvents.emit('board:word-added', word, wordValidation);
     if (this.rowPointer >= this.size) {
       this._isComplete = true;
       this.boardEvents.emit('board:complete', { status: 'game-over' });
@@ -95,9 +104,11 @@ export class WordleBoard {
     }
   }
 
-  public onFinish(
-    callback: (res: { status: 'game-over' | 'winner' }) => void
-  ) {
+  public onFinish(callback: OnFinishCallback) {
     this.boardEvents.on('board:complete', callback);
+  }
+
+  public onWordAdded(callback: OnWordAddedCallback) {
+    this.boardEvents.on('board:word-added', callback);
   }
 }
