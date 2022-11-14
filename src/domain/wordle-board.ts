@@ -9,7 +9,9 @@ export class WordleBoard {
     public readonly size: number,
     public readonly wordSize: number,
     private readonly answer: string
-  ) {}
+  ) {
+    console.log('answer', answer);
+  }
 
   public get rows(): string[][] {
     return this.words.map((word) => word.split(''));
