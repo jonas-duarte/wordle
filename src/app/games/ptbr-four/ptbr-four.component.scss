@@ -16,25 +16,28 @@
   padding-bottom: 1rem;
 }
 
-.boards,
-.boards > div {
+.boards {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
+  padding: 1rem;
+  width: calc(100% - 2rem);
 }
 
 .boards > div {
-  justify-content: space-between;
+  display: flex;
   gap: 1rem;
+  width: calc(50% - 1rem);
 }
 
-@media screen and (min-width: 1450px) {
-  .boards {
-    gap: 2rem;
-  }
+.boards > div > * {
+  width: 50%;
+}
+
+@media (max-width: 560px) {
   .boards > div {
-    gap: 2rem;
+    width: 100%;
   }
 }

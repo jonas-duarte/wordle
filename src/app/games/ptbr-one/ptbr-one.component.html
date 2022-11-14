@@ -2,7 +2,9 @@
 
   <a class="header" href="/">WORDLE DO JONAS</a>
 
-  <app-wordle-board [board]=board [inputManager]=inputManager></app-wordle-board>
+  <div class="boards">
+    <app-wordle-board [board]=board [inputManager]=inputManager></app-wordle-board>
+  </div>
 
   <app-keyboard [inputManager]=inputManager></app-keyboard>
 </div>
