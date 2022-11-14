@@ -26,3 +26,10 @@
   border: 1px solid #fff;
   background-color: #444;
 }
+
+
+@media screen and (max-width: 600px) {
+  .key {
+    // font-size: .5rem;
+  }
+}

@@ -1,7 +1,5 @@
 <div class="container">
   <div class="row" *ngFor="let row of inputManager.layout">
-    <div class="key" *ngFor="let key of row"
-     (click)="handleKeyClick(key)"
-    > {{key}} </div>
+    <div class="key" *ngFor="let key of row" (click)="handleKeyClick(key)"> {{key==="BACKSPACE"?"⌫":key}} </div>
   </div>
 </div>

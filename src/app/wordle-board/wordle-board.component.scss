@@ -56,3 +56,22 @@
     border-color: #fff5;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .container {
+    gap: 0.5rem;
+  }
+  .row {
+    gap: 0.5rem;
+  }
+  .cell {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+    &.selected {
+      &.focused {
+        height: calc(2rem - 2px);
+      }
+    }
+  }
+}
