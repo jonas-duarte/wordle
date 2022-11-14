@@ -22,7 +22,12 @@ export class KeyboardComponent implements OnInit {
     this.inputManager.handleKey(key);
   }
 
-  keyStatus(key: string): KeyStatus | 'undefined' {
-    return this.inputManager.getHigherKeyStatus(key) || 'undefined';
+  keyClass(key: string): string {
+    if (key === 'ENTER' || key === 'BACKSPACE') {
+      return 'special';
+    }
+    const status: KeyStatus | 'undefined' =
+      this.inputManager.getHigherKeyStatus(key) || 'undefined';
+    return status;
   }
 }

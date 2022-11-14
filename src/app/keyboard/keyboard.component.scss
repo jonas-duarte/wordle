@@ -1,8 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin: .5rem;
-  gap: .5rem;
+  margin: 0.5rem;
+  gap: 0.5rem;
   justify-content: center;
   align-items: center;
 }
@@ -12,7 +12,7 @@
   flex-direction: row;
   justify-content: center;
   width: 100%;
-  gap: .5rem;
+  gap: 0.5rem;
   max-width: 700px;
 }
 
@@ -23,8 +23,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: .2rem;
-  border-radius: .2rem;
+  padding: 0.2rem;
+  border-radius: 0.2rem;
   cursor: pointer;
 
   border: 1px solid #fff;
@@ -36,7 +36,7 @@
   }
 
   &.displaced {
-    background-color: #EEB91B;
+    background-color: #eeb91b;
     border-color: #fff5;
   }
 
@@ -44,11 +44,18 @@
     background-color: #000;
     border-color: #fff5;
   }
-}
 
+  &.special {
+    background-color: #970c64;
+  }
+
+  &:hover {
+    box-shadow: inset 0 0 0 2px #fff;
+  }
+}
 
 @media screen and (max-width: 600px) {
   .key {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 }
