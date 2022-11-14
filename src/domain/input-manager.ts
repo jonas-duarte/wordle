@@ -36,8 +36,11 @@ export class InputManager {
     if (this.isKeyInLayout(key)) {
       switch (key.toUpperCase()) {
         case 'BACKSPACE':
+          this._pointer =
+            this._word[this._pointer] === ''
+              ? Math.max(0, this._pointer - 1)
+              : this._pointer;
           this._word[this._pointer] = '';
-          this._pointer = Math.max(0, this._pointer - 1);
           break;
         case 'ENTER':
           this.handleEnter();
