@@ -4,7 +4,7 @@ import { WordleBoard } from 'src/domain/wordle-board';
 import { WordsRepository } from 'src/domain/words-repository';
 
 export const wordsRepository = new WordsRepository(
-  require('../assets/dic/pt-br-5l-words.json')
+  require('../../../assets/dic/pt-br-5l-words.json')
 );
 
 @Component({
