@@ -66,8 +66,15 @@ export class InputManager {
     this.inputEvents.on('input:confirm', callback);
   }
 
+  public onInvalidWord(callback: (word: string) => void) {
+    this.inputEvents.on('input:invalid-word', callback);
+  }
+
   private handleEnter() {
-    if (!this.wordsRepository.isWordValid(this._word.join(''))) return;
+    if (!this.wordsRepository.isWordValid(this._word.join(''))) {
+      this.inputEvents.emit('input:invalid-word', this._word.join(''));
+      return;
+    }
     this.inputEvents.emit('input:confirm', this._word.join(''));
     this._pointer = 0;
     this._word = new Array(this.wordSize);
