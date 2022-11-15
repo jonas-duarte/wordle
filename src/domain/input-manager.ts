@@ -5,6 +5,16 @@ export type KeyStatus = 'correct' | 'incorrect' | 'displaced';
 
 const STATUS_PRIORITY: KeyStatus[] = ['correct', 'displaced', 'incorrect'];
 
+const shaking=[  
+  { transform: 'translate(1px, 1px) rotate(0deg)' },
+  { transform: 'translate(-1px, 0px) rotate(1deg)' },
+  { transform: 'translate(1px, -1px) rotate(-1deg)' }]
+
+  const shakingTime = {
+    duration: 300,
+    iterations: 1,
+  }  
+
 export class InputManager {
   private _word: string[];
   private _pointer = 0;
@@ -67,7 +77,11 @@ export class InputManager {
   }
 
   private handleEnter() {
-    if (!this.wordsRepository.isWordValid(this._word.join(''))) return;
+    if (!this.wordsRepository.isWordValid(this._word.join(''))){
+      document.getElementById('word-container')?.animate(shaking, shakingTime)
+      return;
+    }
+    
     this.inputEvents.emit('input:confirm', this._word.join(''));
     this._pointer = 0;
     this._word = new Array(this.wordSize);
