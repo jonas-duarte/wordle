@@ -38,7 +38,16 @@
 }
 
 @media (max-width: 560px) {
+  .boards {
+    padding: 0;
+    gap: 0.5rem;
+    width: 100%;
+  }
   .boards > div {
-    width: calc(100% - 1rem);
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  .boards > div > * {
+    width: 35%;
   }
 }

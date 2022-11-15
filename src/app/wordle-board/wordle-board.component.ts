@@ -1,11 +1,14 @@
 import { InputManager } from 'src/domain/input-manager';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChildren,
+  QueryList,
+  ElementRef,
+} from '@angular/core';
 import { WordleBoard } from 'src/domain/wordle-board';
-
-// board
-// rows
-// collumns
-// correctWord
+import { shake } from 'src/animations/shake';
 
 @Component({
   selector: 'app-wordle-board',
@@ -15,10 +18,17 @@ import { WordleBoard } from 'src/domain/wordle-board';
 export class WordleBoardComponent implements OnInit {
   @Input() board!: WordleBoard;
   @Input() inputManager!: InputManager;
+  @ViewChildren('rows') rows!: QueryList<ElementRef>;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.inputManager.onInvalidWord(() => {
+      if (this.board.isComplete()) return;
+      const row = this.board.currentRow;
+      shake(this.rows.toArray()[row].nativeElement);
+    });
+  }
 
   get _board(): string[][] {
     const board = this.board.display;
