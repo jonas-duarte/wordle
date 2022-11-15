@@ -46,7 +46,9 @@ export class PtbrTwoComponent implements OnInit {
       if (result === 'winner') {
         this.showMessage('Winner!');
       } else {
-        this.showMessage('Game Over!');
+        this.showMessage(
+          `Game over!\n${this.board1.answer}\n${this.board2.answer}`
+        );
       }
     });
   }

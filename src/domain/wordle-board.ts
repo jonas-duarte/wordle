@@ -16,7 +16,7 @@ export class WordleBoard {
     private readonly wordsRepository: WordsRepository,
     public readonly size: number,
     public readonly wordSize: number,
-    private readonly answer: string
+    public readonly answer: string
   ) {
     console.log('answer', answer);
   }

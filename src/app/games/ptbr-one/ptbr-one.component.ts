@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { InputManager } from 'src/domain/input-manager';
-import { bindBoardsToInputManager, waitForBoardsResult } from 'src/domain/utils';
+import {
+  bindBoardsToInputManager,
+  waitForBoardsResult,
+} from 'src/domain/utils';
 import { WordleBoard } from 'src/domain/wordle-board';
 import { WordsRepository } from 'src/domain/words-repository';
 
@@ -35,7 +38,7 @@ export class PtbrOneComponent implements OnInit {
       if (result === 'winner') {
         this.showMessage('Winner!');
       } else {
-        this.showMessage('Game Over!');
+        this.showMessage(`Game over!\n${this.board.answer}`);
       }
     });
   }
