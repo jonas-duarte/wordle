@@ -94,13 +94,12 @@ export class WordleBoard {
     this._validation.push(wordValidation);
     this.rowPointer++;
     this.boardEvents.emit('board:word-added', word, wordValidation);
-    if (this.rowPointer >= this.size) {
-      this._isComplete = true;
-      this.boardEvents.emit('board:complete', { status: 'game-over' });
-    }
     if (word === this.answer) {
       this._isComplete = true;
       this.boardEvents.emit('board:complete', { status: 'winner' });
+    } else if (this.rowPointer >= this.size) {
+      this._isComplete = true;
+      this.boardEvents.emit('board:complete', { status: 'game-over' });
     }
   }
 
