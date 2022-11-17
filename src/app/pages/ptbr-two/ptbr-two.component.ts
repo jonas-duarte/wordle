@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DialogService } from 'src/app/services/dialog.service';
 import { InputManager } from 'src/domain/input-manager';
 import {
   bindBoardsToInputManager,
@@ -15,6 +16,7 @@ export const wordsRepository = new WordsRepository(
   selector: 'app-ptbr-two',
   templateUrl: './ptbr-two.component.html',
   styleUrls: ['./ptbr-two.component.scss'],
+  providers: [DialogService],
 })
 export class PtbrTwoComponent implements OnInit {
   board1 = new WordleBoard(
@@ -33,22 +35,20 @@ export class PtbrTwoComponent implements OnInit {
 
   inputManager = new InputManager(wordsRepository, 5);
 
-  private showMessage(text: string) {
-    setTimeout(() => {
-      alert(text);
-    }, 100);
-  }
-
-  constructor() {
+  constructor(private dialogService: DialogService) {
     bindBoardsToInputManager([this.board1, this.board2], this.inputManager);
 
     waitForBoardsResult([this.board1, this.board2]).then((result) => {
       if (result === 'winner') {
-        this.showMessage('Winner!');
+        this.dialogService.show({
+          title: 'Vencedor',
+          message: 'Você venceu!',
+        });
       } else {
-        this.showMessage(
-          `Game over!\n${this.board1.answer}\n${this.board2.answer}`
-        );
+        this.dialogService.show({
+          title: 'Game Over',
+          message: `As respostas eram: ${this.board1.answer}, ${this.board2.answer}.`,
+        });
       }
     });
   }

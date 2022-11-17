@@ -9,6 +9,7 @@ import { PtbrOneComponent } from './pages/ptbr-one/ptbr-one.component';
 import { PtbrTwoComponent } from './pages/ptbr-two/ptbr-two.component';
 import { PtbrFourComponent } from './pages/ptbr-four/ptbr-four.component';
 import { HomeComponent } from './pages/home/home.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { HomeComponent } from './pages/home/home.component';
     PtbrTwoComponent,
     PtbrFourComponent,
     HomeComponent,
+    DialogComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

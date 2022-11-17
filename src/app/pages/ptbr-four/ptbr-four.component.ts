@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DialogService } from 'src/app/services/dialog.service';
 import { InputManager } from 'src/domain/input-manager';
 import {
   bindBoardsToInputManager,
@@ -13,11 +14,7 @@ export const wordsRepository = new WordsRepository(
 
 function createBoard() {
   const randomWord = wordsRepository.getRandomWord().toUpperCase();
-  // const randomWord = 'BOCHA';
   const board = new WordleBoard(wordsRepository, 9, 5, randomWord);
-  // setTimeout(() => board.addWord('CENAS'), 1000);
-  // setTimeout(() => board.addWord('CHAME'), 2000);
-  // setTimeout(() => board.addWord('BAIAS'), 3000);
   return board;
 }
 
@@ -25,6 +22,7 @@ function createBoard() {
   selector: 'app-ptbr-four',
   templateUrl: './ptbr-four.component.html',
   styleUrls: ['./ptbr-four.component.scss'],
+  providers: [DialogService],
 })
 export class PtbrFourComponent implements OnInit {
   board1 = createBoard();
@@ -34,13 +32,7 @@ export class PtbrFourComponent implements OnInit {
 
   inputManager = new InputManager(wordsRepository, 5);
 
-  private showMessage(text: string) {
-    setTimeout(() => {
-      alert(text);
-    }, 100);
-  }
-
-  constructor() {
+  constructor(private dialogService: DialogService) {
     bindBoardsToInputManager(
       [this.board1, this.board2, this.board3, this.board4],
       this.inputManager
@@ -53,11 +45,15 @@ export class PtbrFourComponent implements OnInit {
       this.board4,
     ]).then((result) => {
       if (result === 'winner') {
-        this.showMessage('Winner!');
+        this.dialogService.show({
+          title: 'Vencedor',
+          message: 'Você venceu!',
+        });
       } else {
-        this.showMessage(
-          `Game over!\n${this.board1.answer}\n${this.board2.answer}\n${this.board3.answer}\n${this.board4.answer}`
-        );
+        this.dialogService.show({
+          title: 'Game Over',
+          message: `As repostas eram: ${this.board1.answer}, ${this.board2.answer}, ${this.board3.answer}, ${this.board4.answer}.`,
+        });
       }
     });
   }

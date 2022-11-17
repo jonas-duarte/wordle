@@ -1,0 +1,14 @@
+<div class="container" *ngIf="isOpen">
+  <div class="dialog">
+    <div class="dialog-header">
+      <h2 class="dialog-title">{{title}}</h2>
+      <button class="dialog-close" (click)="closeDialog()">&times;</button>
+    </div>
+    <div class="dialog-body">
+      {{body}}
+    </div>
+    <div class="dialog-footer">
+      <button class="dialog-button" (click)="closeDialog()">Close</button>
+    </div>
+  </div>
+</div>
