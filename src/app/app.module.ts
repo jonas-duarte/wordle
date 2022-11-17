@@ -3,12 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { KeyboardComponent } from './keyboard/keyboard.component';
-import { WordleBoardComponent } from './wordle-board/wordle-board.component';
-import { PtbrOneComponent } from './games/ptbr-one/ptbr-one.component';
-import { PtbrTwoComponent } from './games/ptbr-two/ptbr-two.component';
-import { PtbrFourComponent } from './games/ptbr-four/ptbr-four.component';
-import { HomeComponent } from './home/home.component';
+import { KeyboardComponent } from './components/keyboard/keyboard.component';
+import { WordleBoardComponent } from './components/wordle-board/wordle-board.component';
+import { PtbrOneComponent } from './pages/ptbr-one/ptbr-one.component';
+import { PtbrTwoComponent } from './pages/ptbr-two/ptbr-two.component';
+import { PtbrFourComponent } from './pages/ptbr-four/ptbr-four.component';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +18,10 @@ import { HomeComponent } from './home/home.component';
     PtbrOneComponent,
     PtbrTwoComponent,
     PtbrFourComponent,
-    HomeComponent
+    HomeComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
