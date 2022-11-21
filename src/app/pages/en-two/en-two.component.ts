@@ -9,40 +9,47 @@ import { WordleBoard } from 'src/domain/wordle-board';
 import { WordsRepository } from 'src/domain/words-repository';
 
 export const wordsRepository = new WordsRepository(
-  require('../../../assets/dic/pt-br-5l-words.json')
+  require('../../../assets/dic/en-5l-words.json')
 );
 
 @Component({
-  selector: 'app-ptbr-one',
-  templateUrl: './ptbr-one.component.html',
-  styleUrls: ['./ptbr-one.component.scss'],
+  selector: 'app-en-two',
+  templateUrl: './en-two.component.html',
+  styleUrls: ['./en-two.component.scss'],
   providers: [DialogService],
 })
-export class PtbrOneComponent implements OnInit {
-  board = new WordleBoard(
+export class EnTwoComponent implements OnInit {
+  board1 = new WordleBoard(
     wordsRepository,
-    6,
+    7,
     5,
     wordsRepository.getRandomWord().toUpperCase()
   );
+
+  board2 = new WordleBoard(
+    wordsRepository,
+    7,
+    5,
+    wordsRepository.getRandomWord().toUpperCase()
+  );
+
   inputManager = new InputManager(wordsRepository, 5);
 
   constructor(private dialogService: DialogService) {
-    bindBoardsToInputManager([this.board], this.inputManager);
+    bindBoardsToInputManager([this.board1, this.board2], this.inputManager);
 
-    waitForBoardsResult([this.board]).then((result) => {
+    waitForBoardsResult([this.board1, this.board2]).then((result) => {
       if (result === 'winner') {
         this.dialogService.show({
-          title: 'Vencedor',
-          message: 'Você venceu!',
+          title: 'Winner',
+          message: 'You won!',
         });
       } else {
         this.dialogService.show({
           title: 'Game Over',
-          message: `A resposta é: ${this.board.answer}.`,
+          message: `The answers were: ${this.board1.answer}, ${this.board2.answer}.`,
         });
       }
-
     });
   }
 

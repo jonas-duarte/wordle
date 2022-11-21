@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  overflow: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.boards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  width: calc(100% - 2rem);
+}
+
+.boards > div {
+  display: flex;
+  gap: 1rem;
+  width: calc(50% - 1rem);
+}
+
+.boards > div > * {
+  width: 50%;
+}
+
+@media (max-width: 560px) {
+  .boards {
+    padding: 0;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .boards > div {
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  .boards > div > * {
+    width: 35%;
+  }
+}

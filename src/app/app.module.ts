@@ -10,6 +10,9 @@ import { PtbrTwoComponent } from './pages/ptbr-two/ptbr-two.component';
 import { PtbrFourComponent } from './pages/ptbr-four/ptbr-four.component';
 import { HomeComponent } from './pages/home/home.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { EnOneComponent } from './pages/en-one/en-one.component';
+import { EnTwoComponent } from './pages/en-two/en-two.component';
+import { EnFourComponent } from './pages/en-four/en-four.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,9 @@ import { DialogComponent } from './components/dialog/dialog.component';
     PtbrOneComponent,
     PtbrTwoComponent,
     PtbrFourComponent,
+    EnOneComponent,
+    EnTwoComponent,
+    EnFourComponent,
     HomeComponent,
     DialogComponent,
   ],

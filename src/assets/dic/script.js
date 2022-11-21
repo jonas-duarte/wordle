@@ -1,40 +1,32 @@
 const fs = require("fs");
 
-const words = require("./pt-br-5l-words.json");
+const WORDS_TXT = "D:\\Projects\\wordle\\src\\assets\\dic\\words.txt";
+const COMMON_WORDS_TXT = "D:\\Projects\\wordle\\src\\assets\\dic\\common.txt";
 
-// const strings = words.map((word) => word.value);
+const words = fs
+  .readFileSync(WORDS_TXT, "utf8")
+  .split("\n")
+  .filter((word) => word.length === 5)
+  .map((word) => word.toLowerCase())
+  .filter((word) => word.match(/^[a-z]+$/));
+const commonWords = fs
+  .readFileSync(COMMON_WORDS_TXT, "utf8")
+  .split("\n")
+  .filter((word) => word.length === 5);
 
-// console.log(strings);
+// {"key":"saber","value":"saber","common":true}
+const newWords = words.map((word) => ({
+  key: word.toLowerCase(),
+  value: word.toLowerCase(),
+}));
 
-// fs.writeFile("./pt-br-5l-words.txt", strings.join("\r\n"), (err) => {
-//   if (err) throw err;
-//   console.log("The file has been saved!");
-// });
+newWords.forEach((word) => {
+  if (commonWords.includes(word.key)) {
+    word.common = true;
+  }
+});
 
-// const FILE = `D:\\Projects\\wordle\\src\\assets\\dic\\formas.totalbr.txt`;
-// const lines = fs
-//   .readFileSync(FILE, "utf-8")
-//   .split("\n")
-//   .map((l) => l.split("\t")[1]?.trim());
-
-// const commonWords = lines
-//   .filter((l, i) => i < 15000)
-//   .filter((l) => l && l.length === 5)
-//   // starts with upper case
-//   // .forEach((l) => console.log(l));
-//   .filter((l) => l[0] === l[0].toLowerCase());
-
-// let i = 0;
-// const newWords = words.map((w) => {
-//   const word = w.value.toLowerCase();
-//   if (commonWords.includes(word)) {
-//     console.log(i++);
-//     return { ...w, common: true };
-//   }
-//   return { key: w.key, value: w.value };
-// });
-
-// fs.writeFile("./pt-br-5l-words.json", JSON.stringify(newWords), (err) => {
-//   if (err) throw err;
-//   console.log("The file has been saved!");
-// });
+fs.writeFileSync(
+  "D:\\Projects\\wordle\\src\\assets\\dic\\en-5l-words.json",
+  JSON.stringify(newWords)
+);

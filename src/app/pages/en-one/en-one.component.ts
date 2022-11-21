@@ -9,16 +9,16 @@ import { WordleBoard } from 'src/domain/wordle-board';
 import { WordsRepository } from 'src/domain/words-repository';
 
 export const wordsRepository = new WordsRepository(
-  require('../../../assets/dic/pt-br-5l-words.json')
+  require('../../../assets/dic/en-5l-words.json')
 );
 
 @Component({
-  selector: 'app-ptbr-one',
-  templateUrl: './ptbr-one.component.html',
-  styleUrls: ['./ptbr-one.component.scss'],
+  selector: 'app-en-one',
+  templateUrl: './en-one.component.html',
+  styleUrls: ['./en-one.component.scss'],
   providers: [DialogService],
 })
-export class PtbrOneComponent implements OnInit {
+export class EnOneComponent implements OnInit {
   board = new WordleBoard(
     wordsRepository,
     6,
@@ -33,13 +33,13 @@ export class PtbrOneComponent implements OnInit {
     waitForBoardsResult([this.board]).then((result) => {
       if (result === 'winner') {
         this.dialogService.show({
-          title: 'Vencedor',
-          message: 'Você venceu!',
+          title: 'Winner',
+          message: 'You won!',
         });
       } else {
         this.dialogService.show({
           title: 'Game Over',
-          message: `A resposta é: ${this.board.answer}.`,
+          message: `The answer was: ${this.board.answer}.`,
         });
       }
 
