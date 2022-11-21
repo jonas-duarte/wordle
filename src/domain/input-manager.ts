@@ -13,7 +13,7 @@ export class InputManager {
     private wordsRepository: WordsRepository,
     public readonly wordSize: number
   ) {
-    this._word = new Array(wordSize);
+    this._word = new Array(wordSize).fill('');
   }
 
   get layout(): string[][] {
