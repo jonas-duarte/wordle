@@ -10,20 +10,12 @@ import { WordsRepository } from 'src/domain/words-repository';
 const wordsRepository = new WordsRepository([
   { key: 'jonas', value: 'jonas', common: true },
   { key: 'falso', value: 'falso', common: true },
-  { key: 'pista', value: 'pista', common: true },
   { key: 'coisa', value: 'coisa', common: true },
   { key: 'narga', value: 'narga', common: true },
-  { key: 'caspa', value: 'caspa', common: true },
   { key: 'corja', value: 'corja', common: true },
 ]);
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-function createBoard() {
-  const randomWord = wordsRepository.getRandomWord().toUpperCase();
-  const board = new WordleBoard(wordsRepository, 1, 5, randomWord);
-  return board;
-}
 
 @Component({
   selector: 'app-home',
@@ -36,28 +28,40 @@ export class HomeComponent implements OnInit {
 
   constructor() {}
 
+  private _lastWord = '';
+  private createBoard() {
+    let randomWord = this._lastWord;
+    while (randomWord === this._lastWord) {
+      randomWord = wordsRepository.getRandomWord().toUpperCase();
+    }
+    const board = new WordleBoard(wordsRepository, 1, 5, randomWord);
+    this._lastWord = randomWord;
+    return board;
+  }
+
   private async wordLooper() {
-    this.board = createBoard();
+    this.board = this.createBoard();
     this.inputManager.clearEvents();
     bindBoardsToInputManager([this.board], this.inputManager);
 
-    await delay(200);
+    const DELAY_MS = 200;
+    await delay(DELAY_MS);
     this.inputManager.handleKey('j');
-    await delay(200);
+    await delay(DELAY_MS);
     this.inputManager.handleKey('o');
-    await delay(200);
+    await delay(DELAY_MS);
     this.inputManager.handleKey('n');
-    await delay(200);
+    await delay(DELAY_MS);
     this.inputManager.handleKey('a');
-    await delay(200);
+    await delay(DELAY_MS);
     this.inputManager.handleKey('s');
-    await delay(200);
+    await delay(DELAY_MS);
     this.inputManager.handleKey('Enter');
-    await delay(2000);
+    await delay(1000);
 
     setTimeout(() => {
       this.wordLooper();
-    }, 200);
+    });
   }
 
   ngOnInit(): void {
