@@ -113,4 +113,8 @@ export class InputManager {
       this._keyStatus.set(key, value);
     });
   }
+
+  public clearEvents() {
+    this.inputEvents.removeAllListeners('input:confirm');
+  }
 }

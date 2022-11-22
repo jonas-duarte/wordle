@@ -1,5 +1,12 @@
 <div class="container">
-  <div class="header">WORDLE DO JONAS</div>
+  <div class="header">
+    <div>
+      <app-wordle-board [board]="board" [inputManager]="inputManager"></app-wordle-board>
+    </div>
+    <h1>WORDLE</h1>
+  </div>
+
+
   <div class="games">
     <div>GAMES</div>
     <a routerLink="/ptbr">PT-BR</a>
