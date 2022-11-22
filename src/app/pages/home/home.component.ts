@@ -31,12 +31,16 @@ function createBoard() {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  board = createBoard();
+  board!: WordleBoard;
   inputManager = new InputManager(wordsRepository, 5);
 
   constructor() {}
 
   private async wordLooper() {
+    this.board = createBoard();
+    this.inputManager.clearEvents();
+    bindBoardsToInputManager([this.board], this.inputManager);
+
     await delay(200);
     this.inputManager.handleKey('j');
     await delay(200);
@@ -50,9 +54,6 @@ export class HomeComponent implements OnInit {
     await delay(200);
     this.inputManager.handleKey('Enter');
     await delay(2000);
-    this.board = createBoard();
-    this.inputManager.clearEvents();
-    bindBoardsToInputManager([this.board], this.inputManager);
 
     setTimeout(() => {
       this.wordLooper();
