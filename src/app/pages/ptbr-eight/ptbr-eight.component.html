@@ -1,0 +1,10 @@
+<div class="container">
+
+  <a class="header" href="/">WORDLE DO JONAS</a>
+
+  <div class="boards">
+    <app-wordle-board *ngFor="let board of boards" [board]=board [inputManager]=inputManager></app-wordle-board>
+  </div>
+
+  <app-keyboard [inputManager]=inputManager></app-keyboard>
+</div>

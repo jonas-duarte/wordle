@@ -1,3 +1,4 @@
+import { PtbrEightComponent } from './pages/ptbr-eight/ptbr-eight.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -22,6 +23,7 @@ import { EnFourComponent } from './pages/en-four/en-four.component';
     PtbrOneComponent,
     PtbrTwoComponent,
     PtbrFourComponent,
+    PtbrEightComponent,
     EnOneComponent,
     EnTwoComponent,
     EnFourComponent,
